@@ -7,9 +7,8 @@ class MailSender
 {
     private $config;
 
-    public function __construct($configPath = 'config2.json')
+    public function __construct($configPath = 'config.json')
     {
-        // JSON dosyasından konfigürasyon bilgilerini oku
         $this->config = json_decode(file_get_contents($configPath), true);
     }
 
@@ -31,7 +30,6 @@ class MailSender
             $mail->Username = $this->config['smtpInfo']['from'];
             $mail->Password = $this->config['smtpInfo']['password'];
             
-            // Diğer mail ayarlarını yapabilirsiniz
             $mail->setFrom($this->config['smtpInfo']['from'], $this->config['smtpInfo']['from']);
             $mail->addAddress(address:$this->config['smtpInfo']['to']);
             $mail->isHTML(true);
@@ -40,8 +38,6 @@ class MailSender
             
             $mail->addStringAttachment($pdfData, 'attachment.pdf');
 
-
-            // Maili gönder
             $mail->send();
 
             echo 'Mail başarıyla gönderildi.';
